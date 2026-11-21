@@ -10,13 +10,34 @@
       background: #ffd1dc;
       display: grid;
       place-items: center;
-      font-family: ui-rounded, system-ui, -apple-system, sans-serif;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
       color: #7a2e4a;
     }
-    h1 { margin: 0; font-size: clamp(2rem, 8vw, 4rem); font-weight: 600; }
+    h1 { margin: 0; font-size: clamp(2rem, 8vw, 4rem); font-weight: 600; white-space: pre; }
+    .cursor {
+      display: inline-block;
+      width: 0.08em;
+      height: 1em;
+      margin-left: 0.08em;
+      background: currentColor;
+      vertical-align: -0.12em;
+      animation: blink 1s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
 <body>
-  <h1>hello world</h1>
+  <h1 aria-label="hello world"><span id="text"></span><span class="cursor" aria-hidden="true"></span></h1>
+
+  <script>
+    const message = "hello world";
+    const el = document.getElementById("text");
+    let i = 0;
+    function type() {
+      el.textContent = message.slice(0, ++i);
+      if (i < message.length) setTimeout(type, 110 + Math.random() * 120);
+    }
+    setTimeout(type, 600);
+  </script>
 </body>
 </html>
